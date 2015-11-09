@@ -3,6 +3,15 @@ public class Entity3 extends Entity
     // Perform any necessary initialization in the constructor
     public Entity3()
     {
+		super();
+		distanceTable[3][3] = 0;
+		distanceTable[0][0] = 7;
+		distanceTable[2][2] = 2;
+		printDT();
+		int[] minimumCost = generateMinimumCostArray();
+		sendToLayer2(3 , 0 , minimumCost);
+		sendToLayer2(3 , 2 , minimumCost);
+		System.out.println("Table 3 initialized");
     }
     
     // Handle updates when a packet is received.  Students will need to call
@@ -12,6 +21,15 @@ public class Entity3 extends Entity
     // details.
     public void update(Packet p)
     {
+		boolean changed = performUpdate(p);
+		if(changed){
+			printDT();
+			int[] minimumCost = generateMinimumCostArray();
+			sendToLayer2(3 , 0 , minimumCost);	
+			sendToLayer2(3 , 2 , minimumCost);
+			System.out.println("Table 3 updated\n");
+		}
+
     }
     
     public void linkCostChangeHandler(int whichLink, int newCost)
